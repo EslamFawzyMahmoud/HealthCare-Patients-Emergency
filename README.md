@@ -39,41 +39,41 @@ SWITCH(
 2- Age Group : Classification **Patient Age** to (Infancy , Early Childhood , Middle Childhood , Teenager and Adult)
  
 ``` 
-Age Group =
-	VAR  _PatientAge = 'Patients Dataset'[patient_age]
-	RETURN  IF(
-		_PatientAge <=2 ,"Infancy",
-			IF(
-				_PatientAge <=6 , "Early Childhood",
-				IF(
-					_PatientAge<=12 , "Middle Childhood",
-					IF(
-						_PatientAge <=18 , "Teenager",
-						"Adult"
-					)
-				)
-			)
-		)
+Age Group = 
+    VAR _PatientAge = 'Patients Dataset'[patient_age]
+    RETURN IF(
+        _PatientAge <=2 ,"Infancy",
+        IF(
+            _PatientAge <=6 , "Early Childhood",
+            IF(
+                _PatientAge<=12 , "Middle Childhood",
+                IF(
+                    _PatientAge <=18 , "Teenager",
+                    "Adult"
+                )
+            )
+        )
+    )
 ```
 ### 2) Date DataSet
 1- Create Date Column from 1/1/2019 to 31/12/2020
 2- From Date column , we calculated other columns (Year , Month , WeekType , WeekDay , MonthNum)
 
 ```
-Date =
-	ADDCOLUMNS(
-		CALENDARAUTO(),
-			"Year" , YEAR([Date]),
-			"Month" , FORMAT([Date],"mmm"),
-			"WeekType",IF(
-						WEEKDAY([Date])=1,
-						"Weekend",
-						IF(WEEKDAY([Date])=7,
-								      "Weekend",
-								      "Weekday")),
-			"WeekDay" ,FORMAT([Date],"ddd"),
-			"MonthNum" , MONTH([DATE])
-)
+Date = 
+    ADDCOLUMNS(
+        CALENDARAUTO(),
+        "Year" , YEAR([Date]),
+        "Month" , FORMAT([Date],"mmm"),
+        "WeekType",IF(
+                    WEEKDAY([Date])=1,
+                    "Weekend",
+                    IF(WEEKDAY([Date])=7,
+                            "Weekend",
+                            "Weekday")),
+        "WeekDay" ,FORMAT([Date],"ddd"),
+        "MonthNum" , MONTH([DATE])
+        )
 ```
 ### 3) Create CF Max Point (Year)
 Calculate number od patients for each year (2019 and 2020)
